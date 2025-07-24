@@ -6,7 +6,7 @@ YELLOW='\033[1;33m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-echo -e "${GREEN}--- CoreDNS Bypass Manager - Pre-requisites and Menu Script Installer ---${NC}"
+echo -e "${GREEN}--- PeDitX's CoreDNS Bypass Manager - Pre-requisites and Menu Script Installer ---${NC}"
 echo -e "${YELLOW}This script installs all necessary prerequisites for setting up CoreDNS Bypass Manager.${NC}"
 echo -e "${YELLOW}It will then download and execute the main menu script (menu.sh) from GitHub.${NC}"
 echo -e "${YELLOW}This script is designed for Debian/Ubuntu based operating systems.${NC}"
@@ -123,6 +123,6 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-echo -e "${GREEN}--- CoreDNS Bypass Manager installation and setup complete! ---${NC}"
+echo -e "${GREEN}--- PeDitX's CoreDNS Bypass Manager installation and setup complete! ---${NC}"
 echo -e "${YELLOW}You can now manage different parts of the system through the menu script.${NC}"
 echo -e "${YELLOW}Good luck!${NC}"
