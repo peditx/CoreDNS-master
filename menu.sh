@@ -51,7 +51,7 @@ execute_script() {
 while true; do
     echo -e "\n${GREEN}--- PeDitX's CoreDNS-master Menu ---${NC}"
     echo -e "${YELLOW}Please select your desired option:${NC}" # Added this line to make the prompt clear.
-    echo -e "${BLUE}1) Install CoreDNS (install_coredns.sh)${NC}"
+    echo -e "${BLUE}1) Install CoreDNS (install.sh)${NC}"
     echo -e "${BLUE}2) Install API Backend (install_api_backend.sh)${NC}"
     echo -e "${BLUE}3) Install Frontend UI (install_frontend_ui.sh)${NC}"
     echo -e "${BLUE}4) Apply Geo-IP Mod (mod_geo_ip.sh)${NC}"
