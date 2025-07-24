@@ -154,5 +154,3 @@ Contributions are welcome\! If you find bugs, have feature requests, or want to 
 
 This project is licensed under the MIT License - see the [LICENSE](https://www.google.com/search?q=LICENSE) file for details.
 
-```
-```
