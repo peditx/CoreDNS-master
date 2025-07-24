@@ -4,90 +4,108 @@
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 RED='\033[0;31m'
-BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-# Base URL for scripts
-SCRIPT_BASE_URL="https://raw.githubusercontent.com/peditx/CoreDNS-master/refs/heads/main"
+echo -e "${GREEN}--- PeDitX's CoreDNS Bypass Manager - Pre-requisites and Menu Script Installer ---${NC}"
+echo -e "${YELLOW}Installing prerequisites...${NC}"
 
-# Function to download and execute a script
-execute_script() {
-    local script_name="$1"
-    local script_url="$SCRIPT_BASE_URL/$script_name"
-    local temp_path="/tmp/$script_name"
+# --- Check for root privileges ---
+if [ "$EUID" -ne 0 ]; then
+    echo -e "${RED}Error: Please run as root (e.g., sudo bash $0).${NC}"
+    exit 1
+fi
 
-    echo -e "${BLUE}--- Starting execution of $script_name ---${NC}"
-    echo -e "${YELLOW}Downloading $script_name from $script_url...${NC}"
-    wget "$script_url" -O "$temp_path"
+# --- 1. System Update ---
+echo -e "${GREEN}Updating system and installing essential packages...${NC}"
+apt update && apt upgrade -y
+if [ $? -ne 0 ]; then
+    echo -e "${RED}Error during system update.${NC}"
+    exit 1
+fi
+
+apt install -y curl wget git vim apt-transport-https ca-certificates software-properties-common
+if [ $? -ne 0 ]; then
+    echo -e "${RED}Error installing essential tools.${NC}"
+    exit 1
+fi
+
+# --- 2. Node.js and npm ---
+echo -e "${GREEN}Installing Node.js (LTS) and npm...${NC}"
+if ! command -v node &>/dev/null || ! command -v npm &>/dev/null; then
+    curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
+    apt install -y nodejs
     if [ $? -ne 0 ]; then
-        echo -e "${RED}Error: Failed to download $script_name. Please check the URL and your internet connection.${NC}"
-        return 1
+        echo -e "${RED}Node.js installation failed.${NC}"
+        exit 1
     fi
-    echo -e "${GREEN}$script_name downloaded successfully.${NC}"
+else
+    echo -e "${YELLOW}Node.js and npm already installed.${NC}"
+fi
 
-    echo -e "${YELLOW}Granting execute permissions to $script_name...${NC}"
-    chmod +x "$temp_path"
-    if [ $? -ne 0 ]; then
-        echo -e "${RED}Error: Failed to grant execute permissions to $script_name.${NC}"
-        rm "$temp_path"
-        return 1
-    fi
-    echo -e "${GREEN}Permissions granted.${NC}"
+npm install -g create-react-app
+if [ $? -ne 0 ]; then
+    echo -e "${RED}Failed to install create-react-app.${NC}"
+    exit 1
+fi
 
-    echo -e "${YELLOW}Executing $script_name...${NC}"
-    bash "$temp_path"
-    local exit_status=$?
-    if [ $exit_status -ne 0 ]; then
-        echo -e "${RED}Error: $script_name exited with status $exit_status. Please review its output.${NC}"
-    else
-        echo -e "${GREEN}$script_name executed successfully.${NC}"
-    fi
+# --- 3. Python3 and pip ---
+echo -e "${GREEN}Installing Python3, pip, and venv...${NC}"
+apt install -y python3 python3-pip python3-venv
+if [ $? -ne 0 ]; then
+    echo -e "${RED}Python installation failed.${NC}"
+    exit 1
+fi
 
-    rm "$temp_path" # Clean up temporary script file
-    return $exit_status
-}
+# --- 4. PostgreSQL ---
+echo -e "${GREEN}Installing PostgreSQL...${NC}"
+apt install -y postgresql postgresql-contrib
+if [ $? -ne 0 ]; then
+    echo -e "${RED}PostgreSQL installation failed.${NC}"
+    exit 1
+fi
 
-# Main menu loop
-while true; do
-    echo -e "\n${GREEN}--- PeDitX's CoreDNS-master Menu ---${NC}"
-    echo -e "${YELLOW}Please select your desired option:${NC}" # Added this line to make the prompt clear.
-    echo -e "${BLUE}1) Install CoreDNS (install.sh)${NC}"
-    echo -e "${BLUE}2) Install API Backend (install_api_backend.sh)${NC}"
-    echo -e "${BLUE}3) Install Frontend UI (install_frontend_ui.sh)${NC}"
-    echo -e "${BLUE}4) Apply Geo-IP Mod (mod_geo_ip.sh)${NC}"
-    echo -e "${BLUE}5) Integrate Xray (mod_xray_integration.sh)${NC}"
-    echo -e "${BLUE}6) Update Xray UI (update_xray_ui_integration.sh)${NC}"
-    echo -e "${RED}7) Exit${NC}"
+# --- 5. Nginx ---
+echo -e "${GREEN}Installing Nginx...${NC}"
+apt install -y nginx
+if [ $? -ne 0 ]; then
+    echo -e "${RED}Nginx installation failed.${NC}"
+    exit 1
+fi
 
-    read -p "Enter your choice: " choice
+# --- 6. UFW ---
+echo -e "${GREEN}Installing UFW (Firewall)...${NC}"
+apt install -y ufw
+if [ $? -ne 0 ]; then
+    echo -e "${RED}UFW installation failed.${NC}"
+    exit 1
+fi
 
-    case $choice in
-        1)
-            execute_script "install_coredns.sh"
-            ;;
-        2)
-            execute_script "install_api_backend.sh"
-            ;;
-        3)
-            execute_script "install_frontend_ui.sh"
-            ;;
-        4)
-            execute_script "mod_geo_ip.sh"
-            ;;
-        5)
-            execute_script "mod_xray_integration.sh"
-            ;;
-        6)
-            execute_script "update_xray_ui_integration.sh"
-            ;;
-        7)
-            echo -e "${GREEN}Exiting menu. Have a nice day!${NC}"
-            exit 0
-            ;;
-        *)
-            echo -e "${RED}Error: Invalid option. Please enter a number between 1 and 7.${NC}"
-            ;;
-    esac
-    echo -e "\n${YELLOW}Press Enter to continue...${NC}"
-    read -n 1 -s -r # Waits for any key press
-done
+# --- 7. ACL ---
+echo -e "${GREEN}Installing ACL...${NC}"
+apt install -y acl
+if [ $? -ne 0 ]; then
+    echo -e "${RED}ACL installation failed.${NC}"
+    exit 1
+fi
+
+echo -e "${GREEN}All prerequisites installed successfully!${NC}"
+
+# --- 8. Download menu.sh ---
+MENU_SCRIPT_URL="https://raw.githubusercontent.com/peditx/CoreDNS-master/main/menu.sh"
+MENU_SCRIPT_PATH="/tmp/menu.sh"
+
+echo -e "${GREEN}Downloading menu.sh from GitHub...${NC}"
+wget -q "$MENU_SCRIPT_URL" -O "$MENU_SCRIPT_PATH"
+if [ $? -ne 0 ]; then
+    echo -e "${RED}Failed to download menu.sh. Check your internet or the URL.${NC}"
+    exit 1
+fi
+
+chmod +x "$MENU_SCRIPT_PATH"
+bash "$MENU_SCRIPT_PATH"
+if [ $? -ne 0 ]; then
+    echo -e "${RED}menu.sh execution failed.${NC}"
+    exit 1
+fi
+
+echo -e "${GREEN}--- Installation complete. Enjoy! ---${NC}"
