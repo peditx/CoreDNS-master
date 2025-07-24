@@ -1,18 +1,14 @@
------
+![PeDitX Banner](https://raw.githubusercontent.com/peditx/luci-theme-peditx/refs/heads/main/luasrc/brand.png)
+# PeDitX's CoreDNS-master: Advanced DNS Proxy and Bypass Manager
+## Language Selection:
 
-باشه، متوجه شدم. شما می‌خواهید که این فایل `README.md` که نهایتاً به این شکل دراومده رو به فارسی برگردونم. حتماً، در ادامه نسخه فارسی `README.md` رو براتون آماده می‌کنم.
+[**English**](README.md) | [**فارسی**](README_fa.md) | [**中文**](README_zh.md) | [**Русский**](README_ru.md)
 
------
 
-# PeDitX's CoreDNS-master: مدیریت پیشرفته پراکسی DNS و رفع محدودیت‌ها
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/peditx/CoreDNS-master/blob/main/LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/peditx/CoreDNS-master.svg?style=social)](https://github.com/peditx/CoreDNS-master/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/peditx/CoreDNS-master.svg?style=social)](https://github.com/peditx/CoreDNS-master/network/members)
 
-## انتخاب زبان:
-
-[**English**](README.md) | [**فارسی**](https://www.google.com/search?q=README_fa.md) | [**中文**](https://www.google.com/search?q=README_zh.md) | [**Русский**](https://www.google.com/search?q=README_ru.md)
-
-[](https://www.google.com/search?q=%5Bhttps://github.com/peditx/CoreDNS-master/blob/main/LICENSE%5D\(https://github.com/peditx/CoreDNS-master/blob/main/LICENSE\))
-[](https://github.com/peditx/CoreDNS-master/stargazers)
-[](https://github.com/peditx/CoreDNS-master/network/members)
 
 ## معرفی پروژه
 
