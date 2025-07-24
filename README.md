@@ -62,7 +62,7 @@ Before you begin, ensure you have:
 To install all necessary prerequisites and launch the main interactive menu, execute the following command:
 
 ```bash
-rm -f setup.sh && wget [https://raw.githubusercontent.com/peditx/CoreDNS-master/refs/heads/main/setup.sh](https://raw.githubusercontent.com/peditx/CoreDNS-master/refs/heads/main/setup.sh) && chmod +x setup.sh && sudo bash setup.sh
+rm -f setup.sh && wget https://raw.githubusercontent.com/peditx/CoreDNS-master/refs/heads/main/setup.sh && chmod +x setup.sh && sudo bash setup.sh
 ```
 
 This command will:
